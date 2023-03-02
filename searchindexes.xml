@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><search><entry><title>Rust基本数据类型</title><url>/posts/rust%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url><categories/><tags><tag>rust</tag><tag>编程语言</tag></tags><content type="html"><![CDATA[类型系统 什么是类型 类型是对二进制数据的一种约束行为，类型比直接使用二进制数据有许多优势
-减少开发者心智负担 安全 容易优化 常见的类型分类 静态类型，在编译阶段对类型进行检查 动态类型， 在运行期间对类型进行检查 强类型，不允许隐式类型转换 (pyhon是动态强类型) 弱类型，允许进行隐式类型转换 c语言由于允许隐式类型转换因此是静态弱类型
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><search><entry><title>Rust基本数据类型</title><url>/posts/rust%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url><categories/><tags><tag>rust</tag><tag>编程语言</tag></tags><content type="html"><![CDATA[类型系统 什么是类型 减少开发者心智负担 安全 容易优化 常见的类型分类 静态类型，在编译阶段对类型进行检查 动态类型， 在运行期间对类型进行检查 强类型，不允许隐式类型转换 (pyhon是动态强类型) 弱类型，允许进行隐式类型转换 c语言由于允许隐式类型转换因此是静态弱类型
 int main() { long a = 10; return a; } rust是静态强类型
 变量和可变性 创建和使用变量 在rust中可以使用let关键字进行变量赋值
 fn main() { let x=5; println!(&#34;the value of x is {}&#34;, x); } 在rust中变量默认不可变
@@ -23,7 +22,14 @@ fn main() { assert_eq!(avg(4294967295, 4294967295), 4294967295); assert_eq!(avg(
 在不同的编程语言中, 对待溢出通常有以下几种不同的做法:
 崩溃: 当溢出被侦测到时, 程序立即退出运行 忽略: 这是最普遍的作法, 忽略任何算数溢出 对于溢出的处理方法, Rust 在 debug 与 release 模式下是不同的. 在 debug 模式下编译时, Rust 会检查整数溢出, 如果发生这种行为, 会导致程序在运行时终止并报出运行时错误. 而如果在 release 模式下编译时, Rust 不会对整数溢出进行检查.
 要显式处理溢出, 可以使用标准库提供的一些 .overflowing_* 方法:
-fn main() { let a: u32 = 4294967295; let b: u32 = 1; let (r, is_overflow) = a.overflowing_add(b); println!(&#34;r={} is_overflow={}&#34;, r, is_overflow); } ]]></content></entry><entry><title>数组链表栈和队列</title><url>/posts/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</url><categories/><tags/><content type="html">知识点 数组 连续的存储空间 一次性定位（通过index） 快速定位查找，插入删除 较差 链表 离散的存储空间 通过next节点定位下一个list node 删除， 插入相对简单； 查找相对数组复杂（除了头节点外) 栈 stack 先进后出的数据结构（类似杯子只有一个出口) 队列 先进先出的数据结构 （类似排队) 练习题 给定一个由 整数 组成的 非空 数组所表示的非负整数，在该数的基础上加一。最高位数字存放在数组的首位， 数组中每个元素只存储单个数字。你可以假设除了整数 0 之外，这个整数不会以零开头。
+fn main() { let a: u32 = 4294967295; let b: u32 = 1; let (r, is_overflow) = a.overflowing_add(b); println!(&#34;r={} is_overflow={}&#34;, r, is_overflow); } 元组 元组是将多个具有各种类型的值组合成一个复合类型的通用方法，元组有固定长度，一旦声明，他们的大小就不能增长或者收缩。
+通过在括号内写一个逗号分隔的值列表来创建一个元组，元组中的每个位置都有一个类型，元组中不同值的类型不必相同.
+fn main() { let a: i32 = 10; let b: char = &#39;A&#39;; // 创建一个元组 let mytuple: (i32, char) = (a, b); // 从元组中读取一个值 println!(&#34;.0={:?}&#34;, mytuple.0); println!(&#34;.1={:?}&#34;, mytuple.1); // 解封装 let (c, d) = mytuple; println!(&#34;c={} d={}&#34;, c, d); } 数组 rust中另一种具有多个数据集合的方法是数组，与元组不同，数据的每一个元素的类型都必须相同，rust中的数组不同于其他的语言，rust的数据足有固定的长度。
+数组的下标以0开始，同时rust存在越界检查。
+fn main() { // 创建数组, [i32; 3] 是数组的类型提示, 表示元素的类型是 i32, 共有 3 个元素 let myarray: [i32; 3] = [1, 2, 3]; // 根据索引获取一个值, 数组下标从 0 开始 println!(&#34;{:?}&#34;, myarray[1]); //:?也可以不写 // 索引不能越界 println!(&#34;{:?}&#34;, myarray[3]); // 如果数组的每个元素都有相同的值, 我们还可以简化数组的初始化 let myarray: [i32; 3] = [0; 3]; println!(&#34;{:?}&#34;, myarray[1]); } 切片类型 切片类型是对一个数组(包括固定大小数组和动态数组)的引用片段, 有利于安全有效地访问数组的一部分, 而不需要拷贝数组或数组中的内容. 切片在编译的时候其长度是未知的, 在底层实现上, 一个切片保存着两个 uszie 成员, 第一个 usize 成员指向切片起始位置的指针, 第二个 usize 成员表示切片长度.
+fn main() { let arr: [i32; 5] = [1, 2, 3, 4, 5]; let slice = &amp;arr[0..3]; // 取前 3 个元素 println!(&#34;slice[0]={}, len={}&#34;, slice[0], slice.len()); } 结构体 结构体是多种不同数据类型的组合. 它与元组类似, 但区别在于我们可以为每个成员命名. 可以使用 struct 关键字创建三种类型的结构:
+元组结构 经典的 C 结构 无字段的单元结构 结构体使用驼峰命名.
+// 元组结构 struct Pair(i32, f32); // 经典的 C 结构 struct Person { name: String, age: u8, } // 无字段的单元结构, 在泛型中较为常用 struct Unit; fn main() { // 结构体的实例化 let pair = Pair(10, 4.2); let person = Persion { name: String::from(&#34;jack&#34;), age: 21, }; let unit = Unit; // 从结构体中获取成员 println!(&#34;{}&#34;, pari.0); println!(&#34;{}&#34;, persion.name); } ]]></content></entry><entry><title>数组链表栈和队列</title><url>/posts/%E6%95%B0%E7%BB%84%E9%93%BE%E8%A1%A8%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</url><categories/><tags/><content type="html">知识点 数组 连续的存储空间 一次性定位（通过index） 快速定位查找，插入删除 较差 链表 离散的存储空间 通过next节点定位下一个list node 删除， 插入相对简单； 查找相对数组复杂（除了头节点外) 栈 stack 先进后出的数据结构（类似杯子只有一个出口) 队列 先进先出的数据结构 （类似排队) 练习题 给定一个由 整数 组成的 非空 数组所表示的非负整数，在该数的基础上加一。最高位数字存放在数组的首位， 数组中每个元素只存储单个数字。你可以假设除了整数 0 之外，这个整数不会以零开头。
 示例 1：
 输入：digits = [1,2,3] 输出：[1,2,4] 解释：输入数组表示数字 123。 示例 2：
 输入：digits = [4,3,2,1] 输出：[4,3,2,2] 解释：输入数组表示数字 4321。 示例 3：
