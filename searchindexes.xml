@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><search><entry><title>GitFlow开发流程</title><url>/posts/gitflow%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/</url><categories/><tags><tag>git</tag><tag>开发</tag></tags><content type="html"><![CDATA[git Flow工作流 （截取自极客时间)
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><search><entry><title>Etcd基础</title><url>/posts/etcd%E5%9F%BA%E7%A1%80/</url><categories/><tags><tag>etcd</tag></tags><content type="html"></content></entry><entry><title>GitFlow开发流程</title><url>/posts/gitflow%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/</url><categories/><tags><tag>git</tag><tag>开发</tag></tags><content type="html"><![CDATA[git Flow工作流 （截取自极客时间)
 git flow工作流是一个成熟的方案，也是非开源项目中常用到的工作流。 定义了一个围绕项目发布的严格分支模型，通过为代码开发，发布和维护分配独立的分支来让项目迭代流程更加顺畅，比较适合大型项目或者迭代快速的项目。
 git flow的5种分支 git flow中定义了5中分支，分别是master，develop，feature，release和hotfix。其中master和develop是常驻分支， 其他为非常驻分支，不同的研发阶段会用到不同的分支。
 分支名 描述 master 该分支上的最新代码永远是发布状态，不能直接在该分支上进行开发。master分支每合并一个 hotfix/release分支，都会打一个版本标签 develop 该分支上的代码是开发中的最新代码，该分支只做合并操作，不能直接在该分支上进行开发 feature 在研发阶段用来做功能开发。 一个新的功能会基于develop分之创建一个新的feature分支，分支名建议命名为 feature/xxx-xx。功能开发完成后，
@@ -22,7 +22,7 @@ $ git checkout develop $ git merge --no-ff feature/print-hello-world 基于 deve
 $ git checkout -b release/1.0.0 develop $ go build -v . # 构建后，部署二进制文件，并测试 测试失败，因为我们要求打印“hello world”，但打印的是“Hello World”，修复的时候，我们直接在 release/1.0.0 分支修改代码，修改完成后，提交并编译部署。
 $ git commit -a -m &#34;fix bug&#34; $ go build -v . 测试通过后，将功能分支合并到 master 分支和 develop 分支。
 $ git checkout develop $ git merge --no-ff release/1.0.0 $ git checkout master $ git merge --no-ff release/1.0.0 $ git tag -a v1.0.0 -m &#34;add print hello world&#34; # master 分支打 tag 删除 feature/print-hello-world 分支，也可以选择性删除 release/1.0.0 分支。
-$ git branch -d feature/print-hello-world 优缺点 缺点，它有一定的上手难度。 优点：Git Flow 工作流的每个分支分工明确，这可以最大程度减少它们之间的相互影响。因为可以创建多个分支，所以也可以并行开发多个功能。另外，和功能分支工作流一样，它也可以添加 code review，保障代码质量。 ]]></content></entry><entry><title>Rust基本数据类型</title><url>/posts/rust%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url><categories/><tags><tag>rust</tag><tag>编程语言</tag></tags><content type="html"><![CDATA[类型系统 什么是类型 减少开发者心智负担 安全 容易优化 常见的类型分类 静态类型，在编译阶段对类型进行检查 动态类型， 在运行期间对类型进行检查 强类型，不允许隐式类型转换 (pyhon是动态强类型) 弱类型，允许进行隐式类型转换 c语言由于允许隐式类型转换因此是静态弱类型
+$ git branch -d feature/print-hello-world 优缺点 缺点: 它有一定的上手难度。 优点：Git Flow 工作流的每个分支分工明确，这可以最大程度减少它们之间的相互影响。因为可以创建多个分支，所以也可以并行开发多个功能。另外，和功能分支工作流一样，它也可以添加 code review，保障代码质量。 ]]></content></entry><entry><title>Rust基本数据类型</title><url>/posts/rust%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</url><categories/><tags><tag>rust</tag><tag>编程语言</tag></tags><content type="html"><![CDATA[类型系统 什么是类型 减少开发者心智负担 安全 容易优化 常见的类型分类 静态类型，在编译阶段对类型进行检查 动态类型， 在运行期间对类型进行检查 强类型，不允许隐式类型转换 (pyhon是动态强类型) 弱类型，允许进行隐式类型转换 c语言由于允许隐式类型转换因此是静态弱类型
 int main() { long a = 10; return a; } rust是静态强类型
 变量和可变性 创建和使用变量 在rust中可以使用let关键字进行变量赋值
 fn main() { let x=5; println!(&#34;the value of x is {}&#34;, x); } 在rust中变量默认不可变
